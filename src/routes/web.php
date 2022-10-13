@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\Post\IndexController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::prefix('admin')->group(function () {
-    Route::get('/posts', function () {
-        return view('admin.posts.index');
-    })->name('admin.posts.index');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::prefix('posts')->group(function () {
+        Route::get('/', [PostController::class, 'index'])->name('admin.posts.index');
+    });
 });
